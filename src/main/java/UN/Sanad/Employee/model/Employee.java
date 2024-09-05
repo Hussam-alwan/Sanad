@@ -1,6 +1,7 @@
 package UN.Sanad.Employee.model;
 
 import UN.Sanad.EmpAct.model.ActEmp;
+import UN.Sanad.User.model.Users;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -15,8 +16,6 @@ import java.util.List;
 @NoArgsConstructor
 @Builder
 @Entity
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn(name = "Employee_Type")
 public class Employee {
     @Id
     @GeneratedValue
@@ -34,4 +33,8 @@ public class Employee {
 
     @OneToMany(mappedBy ="employee",cascade = CascadeType.ALL)
     List<ActEmp> actEmpList;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    private Users user;
 }

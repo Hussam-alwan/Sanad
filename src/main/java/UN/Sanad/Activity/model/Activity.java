@@ -1,5 +1,6 @@
 package UN.Sanad.Activity.model;
 
+import UN.Sanad.Activity.enums.ActivityEn;
 import UN.Sanad.EmpAct.model.ActEmp;
 import UN.Sanad.UserAct.model.UserAct;
 import jakarta.persistence.*;
@@ -19,11 +20,15 @@ public class Activity {
     @Id
     @GeneratedValue
     private Integer id;
+    private String name;
     private String description;
     private String category;
     private LocalDateTime startDate;
-    private LocalDateTime endDate;
+    private int duration;
     private int budget;
+
+    @Enumerated(EnumType.STRING)
+    private ActivityEn type;
 
     @OneToMany(mappedBy = "activity", cascade = CascadeType.ALL)
     private List<UserAct> userActs;

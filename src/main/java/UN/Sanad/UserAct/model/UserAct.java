@@ -17,8 +17,10 @@ public class UserAct {
     @Id
     @GeneratedValue
     private Integer id;
-    private int bucketMoney;
+    private boolean isEnrolled;
+    private boolean isRegistered;
     private boolean isFavourite;
+    private int bucketMoney;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
