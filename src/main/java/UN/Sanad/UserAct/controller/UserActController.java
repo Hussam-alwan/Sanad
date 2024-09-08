@@ -6,5 +6,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("api/")
 public class UserActController {
+    //@GetMapping(name = "activities/{id}/students")
 
 }

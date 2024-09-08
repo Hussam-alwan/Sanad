@@ -1,7 +1,7 @@
 package UN.Sanad.Activity.model;
 
-import UN.Sanad.Activity.enums.ActivityEn;
 import UN.Sanad.EmpAct.model.ActEmp;
+import UN.Sanad.Employee.model.Employee;
 import UN.Sanad.UserAct.model.UserAct;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -23,17 +23,20 @@ public class Activity {
     private String name;
     private String description;
     private String category;
+    private String city;
     private LocalDateTime startDate;
     private int duration;
     private int budget;
-
-    @Enumerated(EnumType.STRING)
-    private ActivityEn type;
+    private String type;
 
     @OneToMany(mappedBy = "activity", cascade = CascadeType.ALL)
     private List<UserAct> userActs;
 
     @OneToMany(mappedBy = "activity", cascade = CascadeType.ALL)
     private List<ActEmp> actEmps;
+
+    @ManyToOne
+    @JoinColumn(name = "activity_manager_id")
+    private Employee activityManager;
 
 }

@@ -7,6 +7,6 @@ import org.springframework.stereotype.Service;
 @Service
 public class EmpActMapper {
     public EmpActDto toEmpActDto(ActEmp empAct) {
-        return new EmpActDto(empAct.getName(), empAct.getActivity().getId());
+        return new EmpActDto();
     }
 }
