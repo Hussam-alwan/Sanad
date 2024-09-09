@@ -1,7 +1,7 @@
-package UN.Sanad.EmpAct.Mapper;
+package UN.Sanad.EmployeeActivity.Mapper;
 
-import UN.Sanad.EmpAct.dto.EmpActDto;
-import UN.Sanad.EmpAct.model.ActEmp;
+import UN.Sanad.EmployeeActivity.dto.EmpActDto;
+import UN.Sanad.EmployeeActivity.model.ActEmp;
 import org.springframework.stereotype.Service;
 
 @Service

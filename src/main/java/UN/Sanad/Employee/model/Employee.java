@@ -1,6 +1,6 @@
 package UN.Sanad.Employee.model;
 
-import UN.Sanad.EmpAct.model.ActEmp;
+import UN.Sanad.EmployeeActivity.model.ActEmp;
 import UN.Sanad.User.model.Users;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

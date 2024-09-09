@@ -1,6 +1,6 @@
 package UN.Sanad.User.model;
 
-import UN.Sanad.UserAct.model.UserAct;
+import UN.Sanad.UserActivity.model.UserAct;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import lombok.AllArgsConstructor;
@@ -23,7 +23,8 @@ public class Users {
 
     @Column(length = 20)
 
-    private String name;
+    private String firstName;
+    private String lastName;
 
     @Column(unique = true)
     @Email
@@ -38,9 +39,17 @@ public class Users {
     private String address;
 
     private String phoneNumber;
+    public Users(String firstName, String lastName, String email, String gender, String address, String phoneNumber) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.gender = gender;
+        this.address = address;
+        this.phoneNumber = phoneNumber;
+    }
 
     @OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
-    private List<UserAct> userActs;
+    private List<UserAct> userActivities;
 
 
 }

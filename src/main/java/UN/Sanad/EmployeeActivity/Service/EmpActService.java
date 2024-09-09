@@ -1,4 +1,4 @@
-package UN.Sanad.EmpAct.Service;
+package UN.Sanad.EmployeeActivity.Service;
 
 import org.springframework.stereotype.Service;
 

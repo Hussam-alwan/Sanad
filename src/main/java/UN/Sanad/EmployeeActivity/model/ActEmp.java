@@ -1,32 +1,30 @@
-package UN.Sanad.UserAct.model;
+package UN.Sanad.EmployeeActivity.model;
 
 import UN.Sanad.Activity.model.Activity;
-import UN.Sanad.User.model.Users;
+import UN.Sanad.Employee.model.Employee;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
+
 @Entity
-public class UserAct {
+public class ActEmp {
     @Id
     @GeneratedValue
     private Integer id;
-    private boolean isEnrolled;
-    private boolean isRegistered;
-    private boolean isFavourite;
-    private int bucketMoney;
+    private String name;
+
 
     @ManyToOne
-    @JoinColumn(name = "user_id")
-    private Users user;
+    @JoinColumn(name = "employee_id")
+    private Employee employee;
 
     @ManyToOne
     @JoinColumn(name = "activity_id")
     private Activity activity;
+
 }
