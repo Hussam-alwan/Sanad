@@ -32,9 +32,9 @@ public class Employee {
     private int hours;
 
     @OneToMany(mappedBy ="employee",cascade = CascadeType.ALL)
-    List<ActEmp> actEmpList;
+    List<ActEmp> activityEmployees;
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
-    private Users user;
+    private Users   user;
 }

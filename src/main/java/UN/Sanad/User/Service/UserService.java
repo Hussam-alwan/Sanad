@@ -35,6 +35,9 @@ public class UserService {
     public UserDto getUserById(Integer id) {
         return userRepo.findById(id).map(userMapper::toUserDto).orElseThrow(() -> new RuntimeException("User not found"));
     }
+    public Users getEmployeeById(Integer id) {
+        return userRepo.findById(id).orElseThrow(() -> new RuntimeException("User not found"));
+    }
 
     public UserDto updateUser(Integer id, UserDto user) {
         Users users = userRepo.findById(id).orElse(null);
