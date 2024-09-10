@@ -12,6 +12,8 @@ public record UserDto(
         @Email
         String email,
         @NotEmpty
+        String password,
+        @NotEmpty
         String gender,
         @NotEmpty
         String address,

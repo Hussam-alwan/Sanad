@@ -34,6 +34,11 @@ public class EmployeeService {
         Employee employee = employeeRepo.findById(id).orElseThrow(()-> new RuntimeException("Employee not found"));
         return employeeMapper.toEmployeeResponseDto(employee);
     }
+    public Employee getManagerById(int id){
+        return employeeRepo.findById(id).orElseThrow(()-> new RuntimeException("Employee not found"));
+
+    }
+
     public ResponseEmployeeDto updateEmployee(int id,EmployeeDto employeeDto){
         Employee employee = employeeRepo.findById(id).orElseThrow(()-> new RuntimeException("Employee not found"));
         employee.setStartDate(employeeDto.startDate());

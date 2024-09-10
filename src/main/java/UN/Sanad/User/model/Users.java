@@ -39,10 +39,11 @@ public class    Users {
     private String address;
 
     private String phoneNumber;
-    public Users(String firstName, String lastName, String email, String gender, String address, String phoneNumber) {
+    public Users(String firstName, String lastName, String email,String password, String gender, String address, String phoneNumber) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
+        this.password=password;
         this.gender = gender;
         this.address = address;
         this.phoneNumber = phoneNumber;

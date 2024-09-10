@@ -23,10 +23,10 @@ public class UserAct {
     private int bucketMoney;
 
     @ManyToOne
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "User_id")
     private Users user;
 
     @ManyToOne
-    @JoinColumn(name = "activity_id")
+    @JoinColumn(name = "Activity_id")
     private Activity activity;
 }

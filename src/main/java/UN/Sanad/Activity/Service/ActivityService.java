@@ -2,12 +2,12 @@ package UN.Sanad.Activity.Service;
 
 import UN.Sanad.Activity.Mapper.ActivityMapper;
 import UN.Sanad.Activity.dto.ActivityDto;
+import UN.Sanad.Activity.dto.ActivityResponseDto;
 import UN.Sanad.Activity.model.Activity;
 import UN.Sanad.Activity.repo.ActivityRepo;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -20,26 +20,29 @@ public class ActivityService {
         this.activityMapper = activityMapper;
     }
 
-    public List<ActivityDto> findAll() {
+    public List<ActivityResponseDto> findAll() {
         List<Activity> activities = activityRepository.findAll();
         return activities.stream()
-                .map(activityMapper::toActivityDto)
+                .map(activityMapper::activityResponseDto)
                 .collect(Collectors.toList());
     }
 
 
-    public ActivityDto getActivityById(Integer id) {
+    public ActivityResponseDto getActivityById(Integer id) {
         Activity activity = activityRepository.findById(id).orElse(null);
         if (activity != null) {
-            return activityMapper.toActivityDto(activity);
+            return activityMapper.activityResponseDto(activity);
         }
         return null;
     }
+    public Activity getActivityUserById(Integer id) {
+        return activityRepository.findById(id).orElse(null);
+    }
 
-    public ActivityDto createActivity(ActivityDto activityDto) {
+    public ActivityResponseDto createActivity(ActivityDto activityDto) {
         Activity activity = activityMapper.toActivity(activityDto);
         activityRepository.save(activity);
-        return activityMapper.toActivityDto(activity);
+        return activityMapper.activityResponseDto(activity);
     }
 
 
@@ -53,29 +56,19 @@ public class ActivityService {
         return "Not Found";
     }
 
-    public List<ActivityDto> getActivitiesByCity(String city) {
+    public List<ActivityResponseDto> getActivitiesByCity(String city) {
          List<Activity> activities = activityRepository.findAllByCityLike(city);
-
         return activities.stream()
-                .map(activityMapper::toActivityDto)
+                .map(activityMapper::activityResponseDto)
                 .collect(Collectors.toList());
     }
 
-    public ActivityDto updateActivity(Integer id, ActivityDto activityDTO) {
-        Optional<Activity> activity = activityRepository.findById(id);
-
-        if (activity.isPresent()) {
-            Activity updatedActivity = activity.get();
-            updatedActivity.setName(activityDTO.name());
-            updatedActivity.setDescription(activityDTO.description());
-            updatedActivity.setCategory(activityDTO.category());
-            updatedActivity.setCity(activityDTO.city());
-            updatedActivity.setStartDate(activityDTO.startDate());
-            updatedActivity.setDuration(activityDTO.duration());
-            updatedActivity.setBudget(activityDTO.budget());
-            activityRepository.save(updatedActivity);
-            return activityMapper.toActivityDto(updatedActivity);
-        }
-        throw new RuntimeException("Activity not found");
+    public ActivityResponseDto updateActivity(Integer id, ActivityDto activityDTO) {
+        activityRepository.findById(id).orElseThrow(() -> new RuntimeException("Activity not found"));
+        Activity activity;
+        activity = activityMapper.toActivity(activityDTO);
+        activity.setId(id);
+        activityRepository.save(activity);
+        return activityMapper.activityResponseDto(activity);
     }
 }

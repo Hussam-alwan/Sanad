@@ -2,6 +2,7 @@ package UN.Sanad.User.Service;
 
 import UN.Sanad.User.Mapper.UserMapper;
 import UN.Sanad.User.dto.UserDto;
+import UN.Sanad.User.dto.UserResponseDto;
 import UN.Sanad.User.model.Users;
 import UN.Sanad.User.repo.UserRepo;
 import org.springframework.stereotype.Service;
@@ -19,31 +20,29 @@ public class UserService {
         this.userRepo = userRepo;
     }
 
-    public UserDto createUser(UserDto userDto){
+    public UserResponseDto createUser(UserDto userDto){
         Users users = userMapper.toUser(userDto);
         users = userRepo.save(users);
         return userMapper.toUserDto(users);
     }
 
-    public List<UserDto> getAllUsers() {
+    public List<UserResponseDto> getAllUsers() {
         return userRepo.findAll()
                 .stream()
                 .map(userMapper::toUserDto)
                 .collect(Collectors.toList());
     }
 
-    public UserDto getUserById(Integer id) {
+    public UserResponseDto getUserById(Integer id) {
         return userRepo.findById(id).map(userMapper::toUserDto).orElseThrow(() -> new RuntimeException("User not found"));
     }
     public Users getEmployeeById(Integer id) {
         return userRepo.findById(id).orElseThrow(() -> new RuntimeException("User not found"));
     }
 
-    public UserDto updateUser(Integer id, UserDto user) {
-        Users users = userRepo.findById(id).orElse(null);
-        if (users == null) {
-            throw  new RuntimeException("User not found");
-        }
+    public UserResponseDto updateUser(Integer id, UserDto user) {
+        userRepo.findById(id).orElseThrow(() -> new RuntimeException("User not found"));
+        Users users;
         users = userMapper.toUser(user);
         users.setId(id);
         users = userRepo.save(users);
