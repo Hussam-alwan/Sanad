@@ -9,7 +9,7 @@ public record ResponseEmployeeDto(
         String email,
         String gender,
         LocalDateTime startDate,
-        LocalDateTime endDate,
+        Integer duration,
         boolean isCoach,
         int salary,
         int hours

@@ -42,7 +42,7 @@ public class EmployeeService {
     public ResponseEmployeeDto updateEmployee(int id,EmployeeDto employeeDto){
         Employee employee = employeeRepo.findById(id).orElseThrow(()-> new RuntimeException("Employee not found"));
         employee.setStartDate(employeeDto.startDate());
-        employee.setEndDate(employeeDto.endDate());
+        employee.setDuration(employeeDto.duration());
         employee.setCoach(employeeDto.isCoach());
         employee.setHours(employeeDto.hours());
         employee.setSalary(employeeDto.salary());
@@ -54,4 +54,6 @@ public class EmployeeService {
         Employee employee = employeeRepo.findById(id).orElseThrow(()-> new RuntimeException("Employee not found"));
         employeeRepo.delete(employee);
     }
+
 }
+

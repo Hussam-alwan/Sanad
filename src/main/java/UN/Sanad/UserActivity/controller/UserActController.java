@@ -10,41 +10,38 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/activities")
+@RequestMapping("/api/activity")
 public class UserActController {
-
     private final UserActService userActService;
 
     public UserActController(UserActService userActService) {
         this.userActService = userActService;
     }
 
-    @GetMapping("/{activityId}/students")
-
-    public List<UserActivityResponseDto> getUsersByActivityId(@PathVariable("activityId") int activityId) {
-        return this.userActService.getStudentByActivityId(activityId);
+    @GetMapping("/{id}/students")
+    @ResponseStatus(HttpStatus.OK)
+    public List<UserActivityResponseDto> getUsersByActivityId(@PathVariable("id") Integer activityId) {
+        return userActService.getUsersByActivityId(activityId);
     }
-
-    @GetMapping("/{activityId}/students/{studentId}")
-    public UserActivityResponseDto getUserByActivityId(@PathVariable("activityId") Integer activityId, @PathVariable("studentId") Integer studentId) {
-        return this.userActService.getUserByActivityId(activityId, studentId);
+    @GetMapping("/{id}/students/{userId}")
+    public UserActivityResponseDto getUserByActivityIdAndUserId(@PathVariable("id") Integer activityId, @PathVariable("userId") Integer userId) {
+        return userActService.getUserByActivityIdAndUserId(activityId, userId);
     }
-
-    @PostMapping("/{activityId}/students")
+    @PostMapping("/{id}/students")
     @ResponseStatus(HttpStatus.CREATED)
-    public UserActivityResponseDto addUserToActivity(@PathVariable("activityId") Integer activityId,@Valid @RequestBody UserActDto userActDto) {
-        return this.userActService.addUserToActivity(activityId, userActDto);
+    public UserActivityResponseDto addUserToActivity(@PathVariable("id") Integer activityId, @Valid @RequestBody UserActDto userActDto) {
+        return userActService.createUserAct(activityId, userActDto);
     }
 
-    @PutMapping("/{activityId}/students/{studentId}")
+    @PutMapping("/{id}/students/{userId}")
     @ResponseStatus(HttpStatus.OK)
-    public UserActivityResponseDto updateUserAct(@PathVariable("activityId") Integer activityId, @PathVariable("studentId") Integer studentId,@Valid @RequestBody UserActDto userActDto) {
-        return this.userActService.updateUserAct(activityId, studentId, userActDto);
+    public UserActivityResponseDto updateUserInActivity(@PathVariable("id") Integer activityId, @PathVariable("userId") Integer userId, @Valid @RequestBody UserActDto userActDto) {
+        return userActService.updateUserAct(activityId, userId, userActDto);
     }
 
-    @DeleteMapping("/{activityId}/students/{studentId}")
-    @ResponseStatus(HttpStatus.OK)
-    public void deleteUserAct(@PathVariable("activityId") Integer activityId, @PathVariable("studentId") Integer studentId) {
-        this.userActService.deleteUserAct(activityId, studentId);
+    @DeleteMapping("/{id}/students/{userId}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void removeUserFromActivity(@PathVariable("id") Integer activityId, @PathVariable("userId") Integer userId) {
+        userActService.deleteUserAct(activityId, userId);
     }
 }

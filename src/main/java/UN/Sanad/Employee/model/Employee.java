@@ -23,7 +23,7 @@ public class Employee {
 
     private LocalDateTime startDate;
 
-    private LocalDateTime endDate;
+    private Integer duration;
 
     private boolean isCoach;
 

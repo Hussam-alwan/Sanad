@@ -20,6 +20,7 @@ public class EmployeeController {
     public List<ResponseEmployeeDto> getEmployees() {
         return this.employeeService.getAllEmployees();
     }
+
     @GetMapping("employee/{id}")
     public ResponseEmployeeDto getEmployeeById(@PathVariable("id") int id) {
         return this.employeeService.getEmployeeById(id);

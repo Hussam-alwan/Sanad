@@ -7,4 +7,5 @@ import java.util.List;
 
 public interface ActivityRepo extends JpaRepository<Activity,Integer> {
     List<Activity> findAllByCityLike(String city);
+    Activity findActivityById(Integer id);
 }

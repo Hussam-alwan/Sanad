@@ -1,17 +1,17 @@
 package UN.Sanad.UserActivity.dto;
 
-import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.PositiveOrZero;
 
 public record UserActDto(
-        @NotEmpty
+        @NotNull
         boolean isEnrolled,
 
-        @NotEmpty
+        @NotNull
         boolean isRegistered,
 
-        @NotEmpty
+        @NotNull
         boolean isFavourite,
 
         @PositiveOrZero

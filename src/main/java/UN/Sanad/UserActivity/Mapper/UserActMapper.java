@@ -19,7 +19,7 @@ public class UserActMapper {
         this.activityService = activityService;
     }
 
-    public UserActivityResponseDto toUserActDto(UserAct userAct){
+    public UserActivityResponseDto toUserActResponseDto(UserAct userAct){
         Users users=userService.getEmployeeById(userAct.getUser().getId());
         Activity activity=activityService.getActivityUserById(userAct.getActivity().getId());
         return new UserActivityResponseDto(
@@ -30,6 +30,16 @@ public class UserActMapper {
                 userAct.getBucketMoney(),
                 users.getFirstName(),
                 activity.getName()
+        );
+    }
+    public UserActDto toUserActDto(UserAct userAct){
+        return new UserActDto(
+                userAct.isEnrolled(),
+                userAct.isRegistered(),
+                userAct.isFavourite(),
+                userAct.getBucketMoney(),
+                userAct.getUser().getId(),
+                userAct.getActivity().getId()
         );
     }
     public UserAct toUserAct(UserActDto userActDto){

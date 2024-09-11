@@ -19,7 +19,7 @@ public class EmployeeMapper {
     public Employee toEmployee(EmployeeDto employeeDto) {
     Employee employee = new Employee();
         employee.setStartDate(employeeDto.startDate());
-        employee.setEndDate(employeeDto.endDate());
+        employee.setDuration(employeeDto.duration());
         employee.setCoach(employeeDto.isCoach());
         employee.setHours(employeeDto.hours());
         employee.setSalary(employeeDto.salary());
@@ -36,7 +36,7 @@ public class EmployeeMapper {
                 users.getEmail(),
                 users.getGender(),
                 employee.getStartDate(),
-                employee.getEndDate(),
+                employee.getDuration(),
                 employee.isCoach(),
                 employee.getSalary(),
                 employee.getHours()

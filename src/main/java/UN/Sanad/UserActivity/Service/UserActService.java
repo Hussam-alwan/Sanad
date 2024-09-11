@@ -20,32 +20,41 @@ public class UserActService {
         this.userActMapper = userActMapper;
     }
 
-    public List<UserActivityResponseDto> getStudentByActivityId(int activityId) {
-        return userActRepo.findByActivityId(activityId).stream().map(userActMapper::toUserActDto).collect(Collectors.toList());
+    public List<UserActivityResponseDto> getUsersByActivityId(Integer activityId) {
+        return userActRepo.findByActivityId(activityId)
+                .stream()
+                .map(userActMapper::toUserActResponseDto)
+                .collect(Collectors.toList());
     }
 
-    public UserAct saveUserAct(UserActDto userActDto) {
+    public UserActivityResponseDto createUserAct(Integer activityId, UserActDto userActDto) {
         UserAct userAct = userActMapper.toUserAct(userActDto);
-        return userActRepo.save(userAct);
+        userAct.getActivity().setId(activityId); // Set activity ID
+        userAct = userActRepo.save(userAct);
+        return userActMapper.toUserActResponseDto(userAct);
     }
 
-    public UserActivityResponseDto getUserByActivityId(Integer activityId, Integer studentId) {
-        return userActMapper.toUserActDto(userActRepo.findByActivityIdAndUserId(activityId, studentId));
-    }
-
-    public UserActivityResponseDto addUserToActivity(Integer activityId, UserActDto userActDto) {
+    public UserActivityResponseDto updateUserAct(Integer activityId, Integer userId, UserActDto userActDto) {
+        UserAct existingUserAct = userActRepo.findByActivityIdAndUserId(activityId, userId);
+        if (existingUserAct == null) {
+            throw new RuntimeException("User activity not found");
+        }
         UserAct userAct = userActMapper.toUserAct(userActDto);
-        userAct.getActivity().setId(activityId);
-        return userActMapper.toUserActDto(userActRepo.save(userAct));
-    }
-    public UserActivityResponseDto updateUserAct(Integer activityId, Integer studentId, UserActDto userActDto) {
-        UserAct userAct = userActMapper.toUserAct(userActDto);
-        userAct.getActivity().setId(activityId);
-        userAct.setUser(userActRepo.findByActivityIdAndUserId(activityId, studentId).getUser());
-        return userActMapper.toUserActDto(userActRepo.save(userAct));
+        userAct.setId(existingUserAct.getId());
+        userAct = userActRepo.save(userAct);
+        return userActMapper.toUserActResponseDto(userAct);
     }
 
-    public void deleteUserAct(Integer activityId, Integer studentId) {
-        userActRepo.deleteByActivityIdAndUserId(activityId, studentId);
+    public void deleteUserAct(Integer activityId, Integer userId) {
+        UserAct existingUserAct = userActRepo.findByActivityIdAndUserId(activityId, userId);
+        if (existingUserAct == null) {
+            throw new RuntimeException("User activity not found");
+        }
+        userActRepo.deleteByActivityIdAndUserId(activityId, userId);
+    }
+
+    public UserActivityResponseDto getUserByActivityIdAndUserId(Integer activityId, Integer userId) {
+        UserAct uses= userActRepo.findByActivityIdAndUserId(activityId, userId);
+        return userActMapper.toUserActResponseDto(uses);
     }
 }
