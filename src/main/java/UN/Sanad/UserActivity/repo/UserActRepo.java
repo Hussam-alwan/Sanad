@@ -7,6 +7,6 @@ import java.util.List;
 
 public interface UserActRepo extends JpaRepository<UserAct,Integer> {
     List<UserAct> findByActivityId(Integer activityId);
-    UserAct findByActivityIdAndUserId(Integer activityId, Integer userId);
+    UserAct findByActivityIdAndId(Integer activityId, Integer userId);
     void deleteByActivityIdAndUserId(Integer activityId, Integer userId);
 }

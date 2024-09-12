@@ -1,6 +1,7 @@
 package UN.Sanad.UserActivity.controller;
 
 import UN.Sanad.UserActivity.Service.UserActService;
+import UN.Sanad.UserActivity.dto.UserActCreatDto;
 import UN.Sanad.UserActivity.dto.UserActDto;
 import UN.Sanad.UserActivity.dto.UserActivityResponseDto;
 import jakarta.validation.Valid;
@@ -29,7 +30,7 @@ public class UserActController {
     }
     @PostMapping("/{id}/students")
     @ResponseStatus(HttpStatus.CREATED)
-    public UserActivityResponseDto addUserToActivity(@PathVariable("id") Integer activityId, @Valid @RequestBody UserActDto userActDto) {
+    public UserActivityResponseDto addUserToActivity(@PathVariable("id") Integer activityId, @Valid @RequestBody UserActCreatDto userActDto) {
         return userActService.createUserAct(activityId, userActDto);
     }
 
