@@ -14,10 +14,12 @@ import java.util.stream.Collectors;
 public class ActivityService {
     private final ActivityRepo activityRepository;
     private final ActivityMapper activityMapper;
+    private final ActivityRepo activityRepo;
 
-    public ActivityService(ActivityRepo activityRepository, ActivityMapper activityMapper) {
+    public ActivityService(ActivityRepo activityRepository, ActivityMapper activityMapper, ActivityRepo activityRepo) {
         this.activityRepository = activityRepository;
         this.activityMapper = activityMapper;
+        this.activityRepo = activityRepo;
     }
 
     public List<ActivityResponseDto> findAll() {
@@ -41,10 +43,12 @@ public class ActivityService {
 
     public ActivityResponseDto createActivity(ActivityDto activityDto) {
         Activity activity = activityMapper.toActivity(activityDto);
+        if (activityRepo.findByNameAndCityAndStartDate(activity.getName(), activity.getCity(), activity.getStartDate()) != null) {
+            throw new RuntimeException("Activity already exists");
+        }
         activityRepository.save(activity);
         return activityMapper.activityResponseDto(activity);
     }
-
 
 
     public String deleteActivity(Integer id) {

@@ -3,6 +3,7 @@ package UN.Sanad.Activity.controller;
 import UN.Sanad.Activity.Service.ActivityService;
 import UN.Sanad.Activity.dto.ActivityDto;
 import UN.Sanad.Activity.dto.ActivityResponseDto;
+import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -36,10 +37,10 @@ public class ActivityController {
     public List<ActivityResponseDto> getActivitiesByCity(@PathVariable("cityName") String city) {
         return this.activityService.getActivitiesByCity(city);
     }
-
+    @Transactional
     @PostMapping
     public ActivityResponseDto createActivity(@Valid @RequestBody ActivityDto activityDTO) {
-        return activityService.createActivity(activityDTO);
+       return activityService.createActivity(activityDTO);
     }
 
     @PutMapping("/{id}")

@@ -5,6 +5,7 @@ import UN.Sanad.EmployeeActivity.dto.EmpActDto;
 import UN.Sanad.EmployeeActivity.dto.EmployeeActivityResponseDto;
 import UN.Sanad.EmployeeActivity.model.ActEmp;
 import UN.Sanad.EmployeeActivity.repo.EmpActRepo;
+import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Service;
 
@@ -47,7 +48,7 @@ public class EmpActService {
         actEmp= empActRepo.save(actEmp);
         return empActMapper.toEmployeeActivityResponseDto(actEmp);
     }
-
+    @Transactional
     public void deleteEmployeeFromActivity(Integer activityId, Integer empId) {
          ActEmp actEmp = empActRepo.findByActivityIdAndId(activityId, empId);
          if(actEmp==null) throw new RuntimeException("Employee not found");

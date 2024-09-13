@@ -7,6 +7,6 @@ import java.util.List;
 
 public interface EmpActRepo extends JpaRepository<ActEmp,Integer> {
     List<ActEmp> findByActivityId(Integer activityId);
-    ActEmp findByActivityIdAndId(Integer activityId,Integer employeeId);
-    void deleteByActivityIdAndId(Integer activityId, Integer employeeId);
+    ActEmp findByActivityIdAndId(Integer activityId, Integer id);
+    void deleteByActivityIdAndId(Integer activityId, Integer id);
 }
