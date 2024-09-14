@@ -33,16 +33,7 @@ public class UserActMapper {
                 activity.getName()
         );
     }
-    public UserActDto toUserActDto(UserAct userAct){
-        return new UserActDto(
-                userAct.isEnrolled(),
-                userAct.isRegistered(),
-                userAct.isFavourite(),
-                userAct.getBucketMoney(),
-                userAct.getUser().getId(),
-                userAct.getActivity().getId()
-        );
-    }
+
     public UserAct toUserAct(UserActDto userActDto){
         var userAct = new UserAct();
         userAct.setEnrolled(userActDto.isEnrolled());
@@ -53,6 +44,7 @@ public class UserActMapper {
         userAct.setActivity(activityService.getActivityUserById(userActDto.activityId()));
         return userAct;
     }
+
     public UserAct toUserAct(UserActCreatDto userActDto,Integer activityId){
         var userAct = new UserAct();
         userAct.setEnrolled(userActDto.isEnrolled());

@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/activity")
+@RequestMapping("/api/activities")
 public class UserActController {
     private final UserActService userActService;
 
@@ -24,10 +24,12 @@ public class UserActController {
     public List<UserActivityResponseDto> getUsersByActivityId(@PathVariable("id") Integer activityId) {
         return userActService.getUsersByActivityId(activityId);
     }
+
     @GetMapping("/{id}/students/{userId}")
     public UserActivityResponseDto getUserByActivityIdAndUserId(@PathVariable("id") Integer activityId, @PathVariable("userId") Integer userId) {
         return userActService.getUserByActivityIdAndUserId(activityId, userId);
     }
+
     @PostMapping("/{id}/students")
     @ResponseStatus(HttpStatus.CREATED)
     public UserActivityResponseDto addUserToActivity(@PathVariable("id") Integer activityId, @Valid @RequestBody UserActCreatDto userActDto) {
@@ -42,7 +44,7 @@ public class UserActController {
 
     @DeleteMapping("/{id}/students/{userId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void removeUserFromActivity(@PathVariable("id") Integer activityId, @PathVariable("userId") Integer userId) {
-        userActService.deleteUserAct(activityId, userId);
+    public String removeUserFromActivity(@PathVariable("id") Integer activityId, @PathVariable("userId") Integer userId) {
+        return userActService.deleteUserAct(activityId, userId);
     }
 }

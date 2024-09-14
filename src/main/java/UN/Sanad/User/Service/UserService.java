@@ -1,5 +1,7 @@
 package UN.Sanad.User.Service;
 
+import UN.Sanad.Handler.exceptions.EntityAlreadyExist;
+import UN.Sanad.Handler.exceptions.EntityNotFoundException;
 import UN.Sanad.User.Mapper.UserMapper;
 import UN.Sanad.User.dto.UserDto;
 import UN.Sanad.User.dto.UserResponseDto;
@@ -21,6 +23,9 @@ public class UserService {
     }
 
     public UserResponseDto createUser(UserDto userDto){
+      if (userRepo.findByPhoneNumber(userDto.phoneNumber()) != null||userRepo.findByEmail(userDto.email()) != null) {
+          throw new EntityAlreadyExist("User already exists");
+      }
         Users users = userMapper.toUser(userDto);
         users = userRepo.save(users);
         return userMapper.toUserDto(users);
@@ -34,23 +39,24 @@ public class UserService {
     }
 
     public UserResponseDto getUserById(Integer id) {
-        return userRepo.findById(id).map(userMapper::toUserDto).orElseThrow(() -> new RuntimeException("User not found"));
+        return userRepo.findById(id).map(userMapper::toUserDto).orElseThrow(() -> new EntityNotFoundException("User not found"));
     }
+    
     public Users getEmployeeById(Integer id) {
-        return userRepo.findById(id).orElseThrow(() -> new RuntimeException("User not found"));
+        return userRepo.findById(id).orElseThrow(() -> new EntityNotFoundException("User not found"));
     }
 
     public UserResponseDto updateUser(Integer id, UserDto user) {
-        userRepo.findById(id).orElseThrow(() -> new RuntimeException("User not found"));
-        Users users;
-        users = userMapper.toUser(user);
+        userRepo.findById(id).orElseThrow(() -> new EntityNotFoundException("User not found"));
+        Users users = userMapper.toUser(user);
         users.setId(id);
         users = userRepo.save(users);
         return userMapper.toUserDto(users);
     }
 
-    public void deleteUser(Integer id) {
-        userRepo.findById(id).orElseThrow(() -> new RuntimeException("User not found"));
+    public String deleteUser(Integer id) {
+        userRepo.findById(id).orElseThrow(() -> new EntityNotFoundException("User not found"));
         userRepo.deleteById(id);
+        return "User deleted successfully";
     }
 }

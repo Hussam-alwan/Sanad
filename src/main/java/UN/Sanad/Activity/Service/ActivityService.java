@@ -5,6 +5,8 @@ import UN.Sanad.Activity.dto.ActivityDto;
 import UN.Sanad.Activity.dto.ActivityResponseDto;
 import UN.Sanad.Activity.model.Activity;
 import UN.Sanad.Activity.repo.ActivityRepo;
+import UN.Sanad.Handler.exceptions.EntityAlreadyExist;
+import UN.Sanad.Handler.exceptions.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -31,20 +33,18 @@ public class ActivityService {
 
 
     public ActivityResponseDto getActivityById(Integer id) {
-        Activity activity = activityRepository.findById(id).orElse(null);
-        if (activity != null) {
-            return activityMapper.activityResponseDto(activity);
-        }
-        return null;
+        Activity activity = activityRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Activity not found"));
+        return activityMapper.activityResponseDto(activity);
     }
+
     public Activity getActivityUserById(Integer id) {
-        return activityRepository.findById(id).orElse(null);
+        return activityRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Activity not found"));
     }
 
     public ActivityResponseDto createActivity(ActivityDto activityDto) {
         Activity activity = activityMapper.toActivity(activityDto);
         if (activityRepo.findByNameAndCityAndStartDate(activity.getName(), activity.getCity(), activity.getStartDate()) != null) {
-            throw new RuntimeException("Activity already exists");
+            throw new EntityAlreadyExist("Activity already exists");
         }
         activityRepository.save(activity);
         return activityMapper.activityResponseDto(activity);
@@ -52,12 +52,11 @@ public class ActivityService {
 
 
     public String deleteActivity(Integer id) {
-        var findActivity=activityRepository.findById(id);
-        if(findActivity.isPresent()){
-            activityRepository.deleteById(id);
-            return "Deleted";
-        }
-        return "Not Found";
+        if (activityRepository.findById(id).isEmpty())
+            throw new EntityNotFoundException("Activity not found");
+
+        activityRepository.deleteById(id);
+        return "Deleted";
     }
 
     public List<ActivityResponseDto> getActivitiesByCity(String city) {
@@ -68,9 +67,8 @@ public class ActivityService {
     }
 
     public ActivityResponseDto updateActivity(Integer id, ActivityDto activityDTO) {
-        activityRepository.findById(id).orElseThrow(() -> new RuntimeException("Activity not found"));
-        Activity activity;
-        activity = activityMapper.toActivity(activityDTO);
+        activityRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Activity not found"));
+        Activity activity = activityMapper.toActivity(activityDTO);
         activity.setId(id);
         activityRepository.save(activity);
         return activityMapper.activityResponseDto(activity);

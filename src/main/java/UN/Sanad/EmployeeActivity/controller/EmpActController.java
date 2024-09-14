@@ -38,7 +38,7 @@ public class EmpActController {
 
     @DeleteMapping("{id}/employees/{empId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteEmployeeFromActivity(@PathVariable("id") Integer activityId, @PathVariable("empId") Integer empId) {
-        service.deleteEmployeeFromActivity(activityId, empId);
+    public String deleteEmployeeFromActivity(@PathVariable("id") Integer activityId, @PathVariable("empId") Integer empId) {
+       return this.service.deleteEmployeeFromActivity(activityId, empId);
     }
 }

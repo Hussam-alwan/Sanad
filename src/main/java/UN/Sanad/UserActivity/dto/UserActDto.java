@@ -5,22 +5,11 @@ import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.PositiveOrZero;
 
 public record UserActDto(
-        @NotNull
-        boolean isEnrolled,
-
-        @NotNull
-        boolean isRegistered,
-
-        @NotNull
-        boolean isFavourite,
-
-        @PositiveOrZero
-        int bucketMoney,
-
-        @Positive
-        Integer userId,
-        
-        @Positive
-        Integer activityId
+        @NotNull boolean isEnrolled,
+        @NotNull boolean isRegistered,
+        @NotNull boolean isFavourite,
+        @PositiveOrZero int bucketMoney,
+        @Positive Integer userId,
+        @Positive Integer activityId
 ) {
 }

@@ -5,6 +5,8 @@ import UN.Sanad.EmployeeActivity.dto.EmpActDto;
 import UN.Sanad.EmployeeActivity.dto.EmployeeActivityResponseDto;
 import UN.Sanad.EmployeeActivity.model.ActEmp;
 import UN.Sanad.EmployeeActivity.repo.EmpActRepo;
+import UN.Sanad.Handler.exceptions.EntityAlreadyExist;
+import UN.Sanad.Handler.exceptions.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Service;
@@ -32,10 +34,12 @@ public class EmpActService {
 
     public EmployeeActivityResponseDto getEmployeeByActivityIdAndEmpId(Integer activityId, Integer empId) {
         ActEmp actEmp = empActRepo.findByActivityIdAndId(activityId, empId);
+        if (actEmp == null) throw new EntityNotFoundException("Employee Activity not found");
         return empActMapper.toEmployeeActivityResponseDto(actEmp);
     }
 
     public EmployeeActivityResponseDto addEmployeeToActivity(Integer activityId, @Valid EmpActDto dto) {
+        if (empActRepo.findByActivityId(activityId) != null) throw new EntityAlreadyExist("Employee Activity already exists");
         ActEmp actEmp = empActMapper.toEntity(dto,activityId);
         actEmp = empActRepo.save(actEmp);
         return empActMapper.toEmployeeActivityResponseDto(actEmp);
@@ -43,15 +47,17 @@ public class EmpActService {
 
     public EmployeeActivityResponseDto updateEmployeeInActivity(Integer  activityId, Integer empId, @Valid EmpActDto dto) {
         ActEmp existing=empActRepo.findByActivityIdAndId(activityId,empId);
-        if(existing==null)throw new RuntimeException("Employee Activity not found ");
+        if(existing==null)throw new EntityNotFoundException("Employee Activity not found ");
         ActEmp actEmp=empActMapper.toEntity(dto,activityId);
         actEmp= empActRepo.save(actEmp);
         return empActMapper.toEmployeeActivityResponseDto(actEmp);
     }
+
     @Transactional
-    public void deleteEmployeeFromActivity(Integer activityId, Integer empId) {
+    public String deleteEmployeeFromActivity(Integer activityId, Integer empId) {
          ActEmp actEmp = empActRepo.findByActivityIdAndId(activityId, empId);
-         if(actEmp==null) throw new RuntimeException("Employee not found");
+         if(actEmp==null) throw new EntityNotFoundException("Employee not found");
          empActRepo.deleteByActivityIdAndId(activityId,empId);
+         return "Employee deleted successfully";
     }
 }

@@ -6,12 +6,8 @@ import UN.Sanad.Activity.dto.ActivityResponseDto;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.validation.FieldError;
-import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
 import java.util.List;
 
 @RestController
@@ -39,6 +35,7 @@ public class ActivityController {
     }
     @Transactional
     @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
     public ActivityResponseDto createActivity(@Valid @RequestBody ActivityDto activityDTO) {
        return activityService.createActivity(activityDTO);
     }
@@ -50,22 +47,10 @@ public class ActivityController {
     }
 
     @DeleteMapping("/{id}")
-    @ResponseStatus(HttpStatus.OK)
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public String deleteActivity(@PathVariable Integer id) {
        return activityService.deleteActivity(id);
     }
 
-    @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<?> handleMethodArgumentNotValidException(
-            MethodArgumentNotValidException exp
-    ){
-        var errors = new HashMap<String,String>();
-        exp.getBindingResult().getAllErrors().forEach((error)->{
-            var fieldName= ((FieldError) error).getField();
-            var errorMessage=error.getDefaultMessage();
-            errors.put(fieldName,errorMessage);
-        });
-        return new ResponseEntity<>(errors,HttpStatus.BAD_REQUEST);
-    }
 
 }

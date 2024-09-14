@@ -17,9 +17,9 @@ public class UserAct {
     @Id
     @GeneratedValue
     private Integer id;
-    private boolean isEnrolled;
-    private boolean isRegistered;
-    private boolean isFavourite;
+    private boolean enrolled;
+    private boolean registered;
+    private boolean favourite;
     private int bucketMoney;
 
     @ManyToOne

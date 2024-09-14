@@ -25,7 +25,7 @@ public class Employee {
 
     private Integer duration;
 
-    private boolean isCoach;
+    private boolean couch;
 
     private int salary;
 

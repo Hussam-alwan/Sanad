@@ -23,6 +23,7 @@ public class EmpActMapper {
        entity.setEmployee(employeeService.getManagerById(dto.employeeId()));
        return  entity;
    }
+
    public EmployeeActivityResponseDto toEmployeeActivityResponseDto(ActEmp entity) {
        return new EmployeeActivityResponseDto(
                entity.getId(),
