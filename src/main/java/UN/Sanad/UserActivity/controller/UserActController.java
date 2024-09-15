@@ -2,7 +2,6 @@ package UN.Sanad.UserActivity.controller;
 
 import UN.Sanad.UserActivity.Service.UserActService;
 import UN.Sanad.UserActivity.dto.UserActCreatDto;
-import UN.Sanad.UserActivity.dto.UserActDto;
 import UN.Sanad.UserActivity.dto.UserActivityResponseDto;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -38,7 +37,7 @@ public class UserActController {
 
     @PutMapping("/{id}/students/{userId}")
     @ResponseStatus(HttpStatus.OK)
-    public UserActivityResponseDto updateUserInActivity(@PathVariable("id") Integer activityId, @PathVariable("userId") Integer userId, @Valid @RequestBody UserActDto userActDto) {
+    public UserActivityResponseDto updateUserInActivity(@PathVariable("id") Integer activityId, @PathVariable("userId") Integer userId, @Valid @RequestBody UserActCreatDto userActDto) {
         return userActService.updateUserAct(activityId, userId, userActDto);
     }
 

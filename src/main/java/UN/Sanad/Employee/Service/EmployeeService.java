@@ -30,7 +30,7 @@ public class EmployeeService {
     }
 
     public ResponseEmployeeDto createEmployee(EmployeeDto employeeDto){
-        if(!employeeRepo.findByStartDateAndCouch(employeeDto.startDate(), employeeDto.isCoach()).isEmpty()){
+        if(!employeeRepo.findByStartDateAndCouchAndUserId(employeeDto.startDate(), employeeDto.isCoach(),employeeDto.userId()).isEmpty()){
             throw new EntityAlreadyExist("Employee already exists");
         }
         Employee employee = employeeMapper.toEmployee(employeeDto);
@@ -48,7 +48,7 @@ public class EmployeeService {
 
     }
 
-    public ResponseEmployeeDto updateEmployee(int id,EmployeeDto employeeDto){
+    public ResponseEmployeeDto updateEmployee(Integer id,EmployeeDto employeeDto){
         employeeRepo.findById(id).orElseThrow(()-> new EntityNotFoundException("Employee not found"));
         Employee employee=employeeMapper.toEmployee(employeeDto);
         employee.setId(id);

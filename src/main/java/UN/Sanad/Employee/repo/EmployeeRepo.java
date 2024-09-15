@@ -7,5 +7,5 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 public interface EmployeeRepo extends JpaRepository<Employee,Integer> {
-    List<Employee> findByStartDateAndCouch(LocalDateTime startDate, Boolean coach);
+    List<Employee> findByStartDateAndCouchAndUserId(LocalDateTime startDate, Boolean coach, Integer userId);
 }

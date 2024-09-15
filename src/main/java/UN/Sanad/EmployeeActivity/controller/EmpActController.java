@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("api/activity")
+@RequestMapping("api/activities")
 public class EmpActController {
     private final EmpActService service;
 

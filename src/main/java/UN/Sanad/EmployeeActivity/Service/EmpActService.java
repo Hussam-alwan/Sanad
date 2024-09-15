@@ -39,7 +39,7 @@ public class EmpActService {
     }
 
     public EmployeeActivityResponseDto addEmployeeToActivity(Integer activityId, @Valid EmpActDto dto) {
-        if (empActRepo.findByActivityId(activityId) != null) throw new EntityAlreadyExist("Employee Activity already exists");
+        if (empActRepo.findByActivityIdAndId(activityId,dto.employeeId()) != null) throw new EntityAlreadyExist("Employee Activity already exists");
         ActEmp actEmp = empActMapper.toEntity(dto,activityId);
         actEmp = empActRepo.save(actEmp);
         return empActMapper.toEmployeeActivityResponseDto(actEmp);
@@ -49,6 +49,7 @@ public class EmpActService {
         ActEmp existing=empActRepo.findByActivityIdAndId(activityId,empId);
         if(existing==null)throw new EntityNotFoundException("Employee Activity not found ");
         ActEmp actEmp=empActMapper.toEntity(dto,activityId);
+        actEmp.setId(empId);
         actEmp= empActRepo.save(actEmp);
         return empActMapper.toEmployeeActivityResponseDto(actEmp);
     }
