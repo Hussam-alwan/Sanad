@@ -38,10 +38,11 @@ public class UserActService {
         if (userActRepo.findByUserIdAndRegistered(userActCreatDto.userId(), userActCreatDto.isRegistered()) != null) {
             throw new EntityAlreadyExist("User activity already exists");
         }
-        Activity activity=activityRepo.findById(activityId).orElse(null);
+        Activity activity=activityRepo.findById(activityId).orElseThrow(null);
         if(activity.getActivityManager().getId()==userActCreatDto.userId()){
             throw new EntityAlreadyExist("User is activity manager");
         }
+
         UserAct userAct = userActMapper.toUserAct(userActCreatDto,activityId);// Set activity ID
         userAct = userActRepo.save(userAct);
         return userActMapper.toUserActResponseDto(userAct);
