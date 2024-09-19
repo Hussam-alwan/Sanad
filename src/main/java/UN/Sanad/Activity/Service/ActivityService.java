@@ -100,4 +100,8 @@ public class ActivityService {
         activityRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("User not found"));
         return activityRepository.findAllByEnrolledId(id).stream().map(activityMapper::activityResponseDto).collect(Collectors.toList());
     }
+
+    public List<ActivityResponseDto> getAllActivityByCategory(String name) {
+        return activityRepository.findAllByCategoryLike(name).stream().map(activityMapper::activityResponseDto).collect(Collectors.toList());
+    }
 }

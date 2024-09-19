@@ -11,6 +11,7 @@ import java.util.List;
 public interface ActivityRepo extends JpaRepository<Activity,Integer> {
     List<Activity> findAllByCityLike(String city);
     Activity findByNameAndCityAndStartDate(String name, String city, LocalDateTime startDate);
+    List<Activity> findAllByCategoryLike(String name);
 
     @Query("SELECT a FROM Activity a INNER JOIN UserAct i ON a.id = i.activity.id WHERE i.user.id = :userId")
     List<Activity> findAllActivitiesByUserId(@Param("userId") Integer userId);
@@ -26,4 +27,6 @@ public interface ActivityRepo extends JpaRepository<Activity,Integer> {
 
     @Query("select a from Activity a INNER JOIN a.actEmps ea WHERE ea.employee.id = :id")
     List<Activity> findAllByEmployeeId(@Param("id") Integer id);
+
+
 }

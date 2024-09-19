@@ -52,6 +52,10 @@ public class ActivityController {
     public ActivityResponseDto getActivityById(@PathVariable("id") Integer id) {
        return this.activityService.getActivityById(id);
     }
+    @GetMapping("/category/{name}")
+    public List<ActivityResponseDto> getAllActivitiesByCategory(@PathVariable("name") String name){
+        return this.activityService.getAllActivityByCategory(name);
+    }
 
     @GetMapping("/city/{cityName}")
     public List<ActivityResponseDto> getActivitiesByCity(@PathVariable("cityName") String city) {
