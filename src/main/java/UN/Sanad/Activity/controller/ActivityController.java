@@ -23,6 +23,30 @@ public class ActivityController {
     public List<ActivityResponseDto> getAllActivities() {
         return this.activityService.findAll();
     }
+    @GetMapping("/user/{id}")
+    public List<ActivityResponseDto> getActivitiesByUser(@PathVariable("id") Integer id) {
+        return this.activityService.getActivitiesByUserId(id);
+    }
+
+    @GetMapping("/user/{id}/favorite")
+    public List<ActivityResponseDto> getFavoriteActivities(@PathVariable("id") Integer id) {
+        return this.activityService.getFavoriteActivities(id);
+    }
+
+    @GetMapping("/user/{id}/registered")
+    public List<ActivityResponseDto> getRegisteredActivities(@PathVariable("id") Integer id) {
+        return this.activityService.getRegisteredActivities(id);
+    }
+
+    @GetMapping("/user/{id}/enrolled")
+    public List<ActivityResponseDto> getEnrolledActivities(@PathVariable("id") Integer id) {
+        return this.activityService.getEnrolledActivities(id);
+    }
+
+    @GetMapping("/employee/{id}")
+    public List<ActivityResponseDto> getAllEmployeeActivities(@PathVariable("id")Integer id){
+        return this.activityService.getAllEmployeeActivities(id);
+    }
 
     @GetMapping("/id/{id}")
     public ActivityResponseDto getActivityById(@PathVariable("id") Integer id) {
@@ -33,6 +57,7 @@ public class ActivityController {
     public List<ActivityResponseDto> getActivitiesByCity(@PathVariable("cityName") String city) {
         return this.activityService.getActivitiesByCity(city);
     }
+
     @Transactional
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)

@@ -35,7 +35,7 @@ public class UserActService {
     }
 
     public UserActivityResponseDto createUserAct(Integer activityId, UserActCreatDto userActCreatDto) {
-        if (userActRepo.findByUserIdAndRegistered(userActCreatDto.userId(), userActCreatDto.isRegistered()) != null) {
+        if (userActRepo.findByActivityIdAndUserIdAndRegistered(activityId,userActCreatDto.userId(), userActCreatDto.isRegistered()) != null) {
             throw new EntityAlreadyExist("User activity already exists");
         }
         Activity activity=activityRepo.findById(activityId).orElseThrow(null);
@@ -76,4 +76,5 @@ public class UserActService {
         }
         return userActMapper.toUserActResponseDto(uses);
     }
+
 }

@@ -9,5 +9,5 @@ public interface UserActRepo extends JpaRepository<UserAct,Integer> {
     List<UserAct> findByActivityId(Integer activityId);
     UserAct findByActivityIdAndId(Integer activityId, Integer userId);
     void deleteByActivityIdAndId(Integer activityId, Integer userId);
-    UserAct findByUserIdAndRegistered(Integer userId, boolean registered);
+    UserAct findByActivityIdAndUserIdAndRegistered(Integer activityId, Integer UserId, boolean registered);
 }

@@ -1,5 +1,6 @@
 package UN.Sanad.UserActivity.controller;
 
+import UN.Sanad.Activity.dto.ActivityResponseDto;
 import UN.Sanad.UserActivity.Service.UserActService;
 import UN.Sanad.UserActivity.dto.UserActCreatDto;
 import UN.Sanad.UserActivity.dto.UserActivityResponseDto;

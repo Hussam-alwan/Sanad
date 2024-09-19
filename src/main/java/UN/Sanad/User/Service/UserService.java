@@ -1,5 +1,7 @@
 package UN.Sanad.User.Service;
 
+import UN.Sanad.Activity.dto.ActivityResponseDto;
+import UN.Sanad.Activity.model.Activity;
 import UN.Sanad.Handler.exceptions.EntityAlreadyExist;
 import UN.Sanad.Handler.exceptions.EntityNotFoundException;
 import UN.Sanad.User.Mapper.UserMapper;

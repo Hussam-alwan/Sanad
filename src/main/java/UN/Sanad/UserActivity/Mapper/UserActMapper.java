@@ -37,7 +37,6 @@ public class UserActMapper {
 
     public UserAct toUserAct(UserActCreatDto userActDto,Integer activityId){
         var userAct = new UserAct();
-        userAct.setEnrolled(userActDto.isEnrolled());
         userAct.setRegistered(userActDto.isRegistered());
         userAct.setFavourite(userActDto.isFavourite());
         userAct.setBucketMoney(userActDto.bucketMoney());

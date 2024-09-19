@@ -50,6 +50,18 @@ public class ActivityService {
         return activityMapper.activityResponseDto(activity);
     }
 
+    public List<ActivityResponseDto> getActivitiesByUserId(Integer userId) {
+        activityRepository.findById(userId).orElseThrow(() -> new EntityNotFoundException("User not found"));
+        return activityRepository.findAllActivitiesByUserId(userId)
+                .stream()
+                .map(activityMapper::activityResponseDto).collect(Collectors.toList());
+    }
+    public List<ActivityResponseDto> getFavoriteActivities(Integer userId) {
+        activityRepository.findById(userId).orElseThrow(() -> new EntityNotFoundException("User not found"));
+        return activityRepository.findAllByFavoriteId(userId)
+                .stream()
+                .map(activityMapper::activityResponseDto).collect(Collectors.toList());
+    }
 
     public String deleteActivity(Integer id) {
         if (activityRepository.findById(id).isEmpty())
@@ -72,5 +84,20 @@ public class ActivityService {
         activity.setId(id);
         activityRepository.save(activity);
         return activityMapper.activityResponseDto(activity);
+    }
+
+    public List<ActivityResponseDto> getRegisteredActivities(Integer id) {
+        activityRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("User not found"));
+        return activityRepository.findAllByRegisteredId(id).stream().map(activityMapper::activityResponseDto).collect(Collectors.toList());
+    }
+
+    public List<ActivityResponseDto> getAllEmployeeActivities(Integer id) {
+        activityRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Employee not found"));
+        return activityRepository.findAllByEmployeeId(id).stream().map(activityMapper::activityResponseDto).collect(Collectors.toList());
+    }
+
+    public List<ActivityResponseDto> getEnrolledActivities(Integer id) {
+        activityRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("User not found"));
+        return activityRepository.findAllByEnrolledId(id).stream().map(activityMapper::activityResponseDto).collect(Collectors.toList());
     }
 }
